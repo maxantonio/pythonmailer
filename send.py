@@ -1,13 +1,15 @@
-
-
+# smtplib library for mails
 import smtplib
+
+# importing smtp configuration
+from config import *
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 # me == my email address
 # you == recipient's email address
-me = "user@gmail.com"
+me = "me@gmail.com"
 you = "to@gmail.com"
 
 # Create message container - the correct MIME type is multipart/alternative.
@@ -31,12 +33,12 @@ part2 = MIMEText(html, 'html')
 
 msg.attach(part2)
 # Send the message via local SMTP server.
-mail = smtplib.SMTP('smtp.gmail.com', 587)
+mail = smtplib.SMTP(connection.server, connection.port)
 
 mail.ehlo()
 
 mail.starttls()
 
-mail.login('user@gmail.com', 'PASSWORD')
+mail.login(connection.user_name, connection.password)
 mail.sendmail(me, you, msg.as_string())
 mail.quit()
